@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+    <div>
+        Profile for <h1>{{ customer.username }}</h1>
+        <h2>Email: {{ customer.email }}</h2>
+        <h2>Phone_number: {{ customer.phone }}</h2>
+        {% if address %}
+            {% for address in address %}
+                <p>{{ address }}</p>
+            {% endfor %}
+        {% endif %}
+        
+    </div>
+    {% if address %}
+    {% for address in address %}
+
+    
+        <div>
+            <span><h2>Address: {{ address.country }}</h2></span>
+            
+            <span><h2>Country: {{ address.state }}</h2></span>
+        
+            <span><h2>City: {{ address.city }}</h2></span>
+        
+            <span><h2>Billings: {{ address.billing_type }}</h2></span>
+        
+        </div>
+    {% endfor %}
+        <div><h2><a href="{% url 'profile_edit' %}">Edit info</a></h2> </div>
+    {% else %}
+        <div><h2><a href="{% url 'profile_add' %}">Add address</a> </h2></div>
+    
+    {% endif %}
+{% endblock content%}

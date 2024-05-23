@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}detail page{% endblock title %}
+
+{% block content %}
+
+    
+
+    <h1>{{ product.title }}</h1>
+    <h3>category - {{ product.category }}</h3>
+    <h3>subcategory- {{ product.category.subcategories }}</h3>
+    <h3>brand - {{ product.brand }}</h3>
+    <h3>price - {{ product.price }}</h3>
+    <h3>discount - {{ product.discount }}</h3>
+    <h2>total - {{ product.final_price }}</h2>
+
+ 
+
+
+{% endblock content %}

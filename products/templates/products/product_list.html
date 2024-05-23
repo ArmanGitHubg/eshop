@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Product list{% endblock title %}
+
+{% block content %}
+
+    <h1><a href="{% url 'product:category_list' %}">View all categories</a> </h1>
+
+    {% for product in products %}
+        <h2><a href="{% url 'product:product_detail' product.slug %}">{{ product.title }}</a> </h2>
+        <h3>category - {{ product.category }}</h3>
+        <h3>brand - {{ product.brand }}</h3>
+        <h3>price - {{ product.price }}</h3>
+        <h3>discount - {{ product.discount }}</h3>
+        <h2>total - {{ product.final_price }}</h2>
+
+    {% endfor %}
+
+{% endblock content %}

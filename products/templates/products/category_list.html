@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Category list{% endblock title %}
+
+{% block content %}
+
+    <h1>The categories are:</h1>
+    {% for parent in parents %}
+        <h2>category name  - {{ parent.name }}</h2>
+        
+        <h1>The subcategories are:</h1>
+        {% for child in parent.subcategories.all %}
+            <h3>{{ child.name }}</h3>
+
+        {% endfor %}
+
+    {% endfor %}
+
+{% endblock content %}
