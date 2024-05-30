@@ -13,6 +13,7 @@
                     <li {% if section == 'home' %}class="selected"{% endif %}>
                     <a href="{% url 'product:home' %}">My Dashboard</a>
                     </li>
+
                 </ul>
             {% endif %}
             <span class="user">
@@ -24,7 +25,26 @@
                     <a href="{% url 'login' %}">Log-in</a>
                 {% endif %}
             </span>
+            <span>
+                <div class="cart"> 
+                    
+                    {% with total_items=cart|length %}
+                        {% if total_items > 0 %}
+                            Your cart:
+                            <a href="{% url 'cart:cart_detail' %}">
+                            {{ total_items }} item{{ total_items|pluralize }},
+                            {{ cart.get_total_price}} AED
+                        {% else %}
+                            Your cart is empty.
+                        {% endif %}
+                    {% endwith %}
+                    
+                </div>
+
+            </span>
+
         </div>
+
         <div id="content">
             {% block content %}
             {% endblock content %}

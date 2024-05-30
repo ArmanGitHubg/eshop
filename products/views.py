@@ -1,9 +1,11 @@
 from typing import Any
 from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Category, Brand, Discount, Product
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import get_object_or_404, get_list_or_404
+from cart.forms import CartAddProductForm
+from cart.cart import Cart
 # Create your views here.
 
 class ProductListView(ListView):
@@ -35,19 +37,36 @@ class ProductListView(ListView):
     
 class ProductDetailView(DetailView):
 
-    # def get(self, request, product_id, *args, **kwargs):
-    #     product = get_object_or_404(Product,id=product_id)
-    #     return render(request, 'products/product_detail.html',
-    #                   {'product':product,})
 
+  
     model = Product
-    context_object_name = "product"
+    # context_object_name = "product"
     template_name = 'products/product_detail.html'
+    
+    def get(self, request, slug, *args, **kwargs):
+        form = CartAddProductForm()
+        product = get_object_or_404(Product,slug=slug)
 
+        return render(request, 'products/product_detail.html',
+                        {'product':product,
+                         'form':form})
+
+    
+    # def post(self, request, slug, *args, **kwargs):
+    #     product = get_object_or_404(Product, slug=slug)
+    #     form = CartAddProductForm(request.POST)
+    #     cart = Cart(request)
+
+    #     if form.is_valid():
+    #         cd = form.cleaned_data
+    #         cart.add(product=product, quantity=cd['quantity'])
+
+    #         return redirect('cart:cart_detail')
 
 
 
 class CategoryListView(ListView):
+    
     # to override the default context 'object_list'
     context_object_name = 'parents'
     template_name = 'products/category_list.html'

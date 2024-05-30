@@ -4,7 +4,9 @@
 
 {% block content %}
 
+    <h2><a href="{% url 'cart:cart_detail' %}">Your Cart</a></h2>
     <h1><a href="{% url 'product:category_list' %}">View all categories</a> </h1>
+
 
     {% for product in products %}
         <h2><a href="{% url 'product:product_detail' product.slug %}">{{ product.title }}</a> </h2>

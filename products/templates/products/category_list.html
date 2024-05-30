@@ -3,7 +3,7 @@
 {% block title %}Category list{% endblock title %}
 
 {% block content %}
-
+    <h2><a href="{% url 'cart:cart_detail' %}">Your Cart</a></h2>
     <h1>The categories are:</h1>
     {% for parent in parents %}
         <h2>category name  - {{ parent.name }}</h2>

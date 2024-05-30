@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Cart{% endblock title %}
+
+{% block content %}
+    <h1>this is cart detail page</h1>
+    {% for item in cart %}
+    {% with product=item.product %}
+        <div><ul><li>
+            <h3>product:{{ product.title }}</h3>
+            <h3>quantity:{{ item.quantity }}</h3>
+            <h3>price:{{ item.total_price }}</h3>
+            <h3></h3>
+        </li></ul></div>
+
+
+    <div>
+        <form method="post" action="{% url 'cart:cart_add' product.id %}">
+            {% csrf_token %}
+            {{ item.update_quantity_form.quantity }}
+            {{ item.update_quantity_form.override }}
+            <input type="submit" value="update">
+
+        </form>
+        <span><form method="post" action="{% url 'cart:cart_remove' product.id %}">
+            {% csrf_token %}
+            <input type="submit" value="remove">
+        </form></span>
+    </div>
+
+    {% endwith %}
+    {% endfor %}    
+    <h2>total price:{{ cart.get_total_price }}</h2>
+    <h2><a href="{% url 'product:product_list' %}">continue shopping</a> </h2>
+{% endblock content%}

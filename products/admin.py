@@ -15,6 +15,9 @@ class BasicStackedInline(admin.StackedInline):
 class CategoryInline(BasicTabularInline):
     model = Category
 
+class BrandInline(BasicTabularInline):
+    model = Brand
+
 class ProductInline(BasicStackedInline):
     model = Product
     fields = BasicTabularInline.fields + [
@@ -53,7 +56,7 @@ class BrandAdmin(admin.ModelAdmin):
     search_fields = ['name']
     prepopulated_fields = {'slug':['name']}
     ordering = ['id']
-    inlines = [ProductInline]
+    # inlines = [ProductInline]
 
 
 @admin.register(Discount)
