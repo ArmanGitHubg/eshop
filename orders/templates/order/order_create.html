@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Order-create{% endblock title %}
+
+{% block content %}
+    {% for item in cart %}
+        
+            <ul>
+                <li>
+                    product:{{ item.product.title }}
+                    
+                    
+                </li>
+                <li>
+                    quantity: {{ item.quantity }}
+                </li>
+                <li>
+                    price: {{ item.price }}
+                </li>
+            </ul>
+        
+    {% endfor %}
+    
+    <h1></h1>
+    <div>
+        shipping details:
+        
+        {% comment %}
+        {% for addr in address %}
+            <p>{{ addr.address }},{{ addr.city }}-{{ addr.country }}({{ addr.billing_type }}) </p>
+        {% endfor %}
+        {% endcomment %}
+        <h1>test case {{ customer.email }} </h1>
+        
+
+        <p>address: {{ address }}</p>
+        <p>Your name: {{ customer }} | {{ customer.email }}</p>
+        <p>Phone: {{ customer.phone }}</p>
+    </div>
+    <h1></h1>
+    <div>
+        <h3> Cart summary</h3>
+        
+        total price {{ cart.get_total_price }}AED
+    </div>
+    <h1></h1>
+    <div>
+        <form class="order-form" method="post" >
+            {{ form.as_p }}
+            
+            <input type="submit" value="Confirm Order">
+            {% csrf_token %}
+        </form>
+    </div>
+{% endblock content %}

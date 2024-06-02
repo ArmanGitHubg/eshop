@@ -15,21 +15,31 @@
 
 
     <div>
-        <form method="post" action="{% url 'cart:cart_add' product.id %}">
+        <form  action="{% url 'cart:cart_add' product.id %}" method="post">
             {% csrf_token %}
             {{ item.update_quantity_form.quantity }}
             {{ item.update_quantity_form.override }}
             <input type="submit" value="update">
 
         </form>
-        <span><form method="post" action="{% url 'cart:cart_remove' product.id %}">
+        <form  action="{% url 'cart:cart_remove' product.id %}" method="post">
+            
             {% csrf_token %}
             <input type="submit" value="remove">
-        </form></span>
+        </form>
     </div>
 
     {% endwith %}
-    {% endfor %}    
-    <h2>total price:{{ cart.get_total_price }}</h2>
+    {% endfor %} 
+    <div>
+        
+            <h2>total price:{{ cart.get_total_price }}</h2>
+        
+        
+            <h2><a href="{% url 'orders:order_create' %}">Place Order</a></h2>
+        
+
+    </div>   
+    
     <h2><a href="{% url 'product:product_list' %}">continue shopping</a> </h2>
 {% endblock content%}

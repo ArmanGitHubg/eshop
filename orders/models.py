@@ -21,7 +21,8 @@ class Order(models.Model):
     status = models.CharField(max_length=1, default='U',
                               choices=[(key,value) for key, value in STATUSES.items()])
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name='+')
+    # address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name='adresses')
+    address = models.CharField()
     total_price = models.PositiveBigIntegerField(default=0)
     code = models.CharField(max_length=10, default=None, null=True, blank=True)
     

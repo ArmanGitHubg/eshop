@@ -13,9 +13,10 @@
     <h3>price - {{ product.price }}</h3>
     <h3>discount - {{ product.discount }}</h3>
     <h2>total - {{ product.final_price }}</h2>
-    <form method="post" action="{% url 'cart:cart_add' product.id %}">
-        {% csrf_token %}
+    <form method="post" action="{% url 'cart:cart_add' product.id %}" >
+        
         {{ form.as_p }}
+        {% csrf_token %}
         <input type="submit" value="add-to-cart">
     </form>
 

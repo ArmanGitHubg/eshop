@@ -52,16 +52,16 @@ class ProductDetailView(DetailView):
                          'form':form})
 
     
-    # def post(self, request, slug, *args, **kwargs):
-    #     product = get_object_or_404(Product, slug=slug)
-    #     form = CartAddProductForm(request.POST)
-    #     cart = Cart(request)
+    def post(self, request, slug, *args, **kwargs):
+        product = get_object_or_404(Product, slug=slug)
+        form = CartAddProductForm(request.POST)
+        cart = Cart(request)
 
-    #     if form.is_valid():
-    #         cd = form.cleaned_data
-    #         cart.add(product=product, quantity=cd['quantity'])
+        if form.is_valid():
+            cd = form.cleaned_data
+            cart.add(product=product, quantity=cd['quantity'])
 
-    #         return redirect('cart:cart_detail')
+            return redirect('cart:cart_detail')
 
 
 
