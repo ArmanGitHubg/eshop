@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
+from django.urls import reverse
 from cart.cart import Cart
 from accounts.models import Customer, Address
 from django.shortcuts import get_object_or_404
@@ -6,6 +7,8 @@ from .forms import OrderCreateForm, OrderItemCreateForm
 from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView
 from .models import Order, OrderItem
+
+from .tasks import order_created
 
 # Create your views here.
 
@@ -69,13 +72,17 @@ class OrderCreateView(CreateView):
             #         price = item['price'],
             #         qantity = item['quantity']
             #     )
-        else:
-            return HttpResponse('<h1>the form is incorrect<h1>') 
-        cart.clear()
-        return render(request, 'order/order_created.html',
-                      context={'order':order,
-                               })
+        
+            cart.clear()
 
+            # launch asynchronous task
+            order_created.delay(order.id)
+            request.session['order_id'] = order.id
+
+        # return render(request, 'order/order_created.html',
+        #               context={'order':order,
+        #                        })
+            return redirect(reverse('payment:process'))
 
 
 class OrderCreatedView(TemplateView):

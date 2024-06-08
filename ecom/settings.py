@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'products',
     'cart',
     'orders',
+    'payment',
 
 
     # Custom User
@@ -155,3 +156,8 @@ LOGOUT_URL = 'logout'
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 CART_SESSION_ID = 'cart'
+
+# stripe config settings
+STRIPE_PUBLISH_KEY = 'pk_test_51POHNcBoFhUAnxstgrUKU01P04uIGU2ioGkc60RwxG5OuvKs94RuRk4c4YTWsiqixypncjd8JGhjd48dqSzYvlWL00SHek12Iv'
+STRIPE_SECRET_KEY = 'sk_test_51POHNcBoFhUAnxst3owtUIwIF7fWjhk5Ysq1lao8JAwCpEM3rGk9quMc6DF3bKk7EASpjHdqSedjLWAAc98Ydzby004CljT9rJ'
+STRIPE_API_VERSION = '2024-04-10'
