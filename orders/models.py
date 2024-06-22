@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import Customer, Address
 from products.models import Product
+from django.conf import settings
 
 # Create your models here.
 class Order(models.Model):
@@ -17,6 +18,7 @@ class Order(models.Model):
         'U' : "Unpaid",
         'C' : "Canceled"
     }
+    stripe_id = models.CharField(max_length=250, blank=True)
 
     status = models.CharField(max_length=1, default='U',
                               choices=[(key,value) for key, value in STATUSES.items()])
@@ -37,6 +39,19 @@ class Order(models.Model):
     
     def status_name(self):
         return self.__class__.STATUSES[self.status]
+    
+    def get_stripe_url(self):
+        if not self.stripe_id:
+            # no payment associated
+            return
+        if '_test_' in settings.STRIPE_SECRET_KEY:
+            # stripe path for payment
+            path = '/test/'
+        else:
+            # stripe path for real payments
+            path = '/'
+        return f'https://dashboard.stripe.com{path}payments/{self.stripe_id}'
+
 
 class OrderItem(models.Model):
     class Meta:

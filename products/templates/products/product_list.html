@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
 
-{% block title %}Product list{% endblock title %}
 
 {% block content %}
-
     <h2><a href="{% url 'cart:cart_detail' %}">Your Cart</a></h2>
     <h1><a href="{% url 'product:category_list' %}">View all categories</a> </h1>
 
 
-    {% for product in products %}
+    {% for product in products %}     
+       <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+
+
         <h2><a href="{% url 'product:product_detail' product.slug %}">{{ product.title }}</a> </h2>
         <h3>category - {{ product.category }}</h3>
         <h3>brand - {{ product.brand }}</h3>
@@ -17,5 +22,4 @@
         <h2>total - {{ product.final_price }}</h2>
 
     {% endfor %}
-
 {% endblock content %}

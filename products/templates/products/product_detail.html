@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}detail page{% endblock title %}
+{% block title %}{{ product.name }}{% endblock title %}
+
 
 {% block content %}
-
-    
-
     <h1>{{ product.title }}</h1>
     <h3>category - {{ product.category }}</h3>
     <h3>subcategory- {{ product.category.subcategories }}</h3>
@@ -19,8 +18,4 @@
         {% csrf_token %}
         <input type="submit" value="add-to-cart">
     </form>
-
- 
-
-
 {% endblock content %}

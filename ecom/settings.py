@@ -134,8 +134,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
-STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
+# STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
+# STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
+STATIC_ROOT = BASE_DIR / 'static'
+
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
@@ -158,6 +160,8 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 CART_SESSION_ID = 'cart'
 
 # stripe config settings
-STRIPE_PUBLISH_KEY = 'pk_test_51POHNcBoFhUAnxstgrUKU01P04uIGU2ioGkc60RwxG5OuvKs94RuRk4c4YTWsiqixypncjd8JGhjd48dqSzYvlWL00SHek12Iv'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51POHNcBoFhUAnxstgrUKU01P04uIGU2ioGkc60RwxG5OuvKs94RuRk4c4YTWsiqixypncjd8JGhjd48dqSzYvlWL00SHek12Iv'
 STRIPE_SECRET_KEY = 'sk_test_51POHNcBoFhUAnxst3owtUIwIF7fWjhk5Ysq1lao8JAwCpEM3rGk9quMc6DF3bKk7EASpjHdqSedjLWAAc98Ydzby004CljT9rJ'
 STRIPE_API_VERSION = '2024-04-10'
+STRIPE_WEBHOOK_SECRET = 'whsec_ce17070370cf0b04c4aa1c7bb52383caa2bd0ce299932b5077f2aa01f16ed3bb'
+                        
