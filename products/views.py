@@ -6,6 +6,8 @@ from django.views.generic import ListView, DetailView, View
 from django.shortcuts import get_object_or_404, get_list_or_404
 from cart.forms import CartAddProductForm
 from cart.cart import Cart
+from .recommender import Recommender
+
 # Create your views here.
 
 class ProductListView(ListView):
@@ -46,10 +48,12 @@ class ProductDetailView(DetailView):
     def get(self, request, slug, *args, **kwargs):
         form = CartAddProductForm()
         product = get_object_or_404(Product,slug=slug)
-
+        r = Recommender()
+        recommended_products = r.suggest_products_for([product],4)
         return render(request, 'products/product_detail.html',
                         {'product':product,
-                         'form':form})
+                         'form':form,
+                         'recommended_products':recommended_products})
 
     
     def post(self, request, slug, *args, **kwargs):

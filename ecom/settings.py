@@ -44,6 +44,13 @@ INSTALLED_APPS = [
     'cart',
     'orders',
     'payment',
+    'coupons',
+    'chat',
+    'api',
+    
+
+    'redis',
+    'rest_framework',
 
 
     # Custom User
@@ -164,4 +171,15 @@ STRIPE_PUBLISHABLE_KEY = 'pk_test_51POHNcBoFhUAnxstgrUKU01P04uIGU2ioGkc60RwxG5Ou
 STRIPE_SECRET_KEY = 'sk_test_51POHNcBoFhUAnxst3owtUIwIF7fWjhk5Ysq1lao8JAwCpEM3rGk9quMc6DF3bKk7EASpjHdqSedjLWAAc98Ydzby004CljT9rJ'
 STRIPE_API_VERSION = '2024-04-10'
 STRIPE_WEBHOOK_SECRET = 'whsec_ce17070370cf0b04c4aa1c7bb52383caa2bd0ce299932b5077f2aa01f16ed3bb'
-                        
+
+# redis settings
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 1
+
+# rest framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}

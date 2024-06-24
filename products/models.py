@@ -61,7 +61,7 @@ class Product(models.Model):
 
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
-    image = models.FileField(upload_to='product/products', default='unknown.jpg', blank=True)
+    image = models.FileField(upload_to='product/products', default='no_image.png', blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='products')
     price = models.PositiveBigIntegerField()

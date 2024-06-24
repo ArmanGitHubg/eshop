@@ -2,6 +2,9 @@ from django.db import models
 from accounts.models import Customer, Address
 from products.models import Product
 from django.conf import settings
+from decimal import Decimal
+from django.core.validators import MinValueValidator, MaxValueValidator
+from coupons.models import Coupon
 
 # Create your models here.
 class Order(models.Model):
@@ -27,6 +30,9 @@ class Order(models.Model):
     address = models.CharField()
     total_price = models.PositiveBigIntegerField(default=0)
     code = models.CharField(max_length=10, default=None, null=True, blank=True)
+    coupon = models.ForeignKey(Coupon, related_name='orders', null=True, blank=True, on_delete=models.SET_NULL)
+    discount = models.IntegerField(default=0, validators=[MinValueValidator(0),
+                                   MaxValueValidator(100)])
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -35,7 +41,8 @@ class Order(models.Model):
         return f'Order { self.id}'
     
     def get_total_cost(self):
-        return sum(item.get_cost() for item in self.items.all())
+        total_cost = self.get_total_cost_before_discount()
+        return total_cost - self.get_discount()
     
     def status_name(self):
         return self.__class__.STATUSES[self.status]
@@ -51,6 +58,15 @@ class Order(models.Model):
             # stripe path for real payments
             path = '/'
         return f'https://dashboard.stripe.com{path}payments/{self.stripe_id}'
+    
+    def get_total_cost_before_discount(self):
+        return sum(item.get_cost() for item in self.items.all())
+    
+    def get_discount(self):
+        total_cost = self.get_total_cost_before_discount()
+        if self.discount:
+            return total_cost * (self.discount/Decimal(100))
+        return Decimal(0)
 
 
 class OrderItem(models.Model):
